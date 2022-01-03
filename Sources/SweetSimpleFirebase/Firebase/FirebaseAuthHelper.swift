@@ -134,9 +134,11 @@ public extension FirebaseAuthHelper {
       if let presentingVC = UIApplication.shared.windows.first?.rootViewController{
           loginManager.logIn(permissions: ["public_profile", "email"], from: presentingVC) { [weak self] (result, error) in
             print("Facebook Login Completion Handler")
+            
             print(result?.description ?? "res nil")
             print(error?.localizedDescription ?? "err nil")
               guard error == nil else {
+                facebook_signOut()
                   return
               }
               
