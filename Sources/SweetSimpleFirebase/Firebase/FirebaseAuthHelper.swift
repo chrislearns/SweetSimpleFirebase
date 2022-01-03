@@ -138,7 +138,7 @@ public extension FirebaseAuthHelper {
             print(result?.description ?? "res nil")
             print(error?.localizedDescription ?? "err nil")
               guard error == nil else {
-                facebook_signOut()
+                self.facebook_signOut()
                   return
               }
               
