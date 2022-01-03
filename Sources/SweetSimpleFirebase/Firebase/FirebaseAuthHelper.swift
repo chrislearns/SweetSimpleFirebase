@@ -132,7 +132,7 @@ public extension FirebaseAuthHelper {
   func facebookAuth() {
       let loginManager = LoginManager()
       if let presentingVC = UIApplication.shared.windows.first?.rootViewController{
-          loginManager.logIn(permissions: ["public_profile", "email"], from: presentingVC) { [weak self] (result, error) in
+          loginManager.logIn(permissions: ["public_profile", "email"], from: presentingVC) {(result, error) in
             print("Facebook Login Completion Handler")
             
             print(result?.description ?? "res nil")
@@ -144,7 +144,7 @@ public extension FirebaseAuthHelper {
               
               if let result =  result {
                   let credential = FacebookAuthProvider.credential(withAccessToken: result.token?.tokenString ?? "")
-                  self?.firebaseAuth(credentials: credential)
+                  self.firebaseAuth(credentials: credential)
               }
           }
       }
