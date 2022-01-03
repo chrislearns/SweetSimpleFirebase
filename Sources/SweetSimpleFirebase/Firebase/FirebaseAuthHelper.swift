@@ -129,7 +129,7 @@ public extension FirebaseAuthHelper {
 }
 
 public extension FirebaseAuthHelper {
-  func facebookAuth() {
+  func facebookAuth(onFail:(() -> ())? = nil) {
       let loginManager = LoginManager()
       if let presentingVC = UIApplication.shared.windows.first?.rootViewController{
           loginManager.logIn(permissions: ["public_profile", "email"], from: presentingVC) {(result, error) in
@@ -139,6 +139,7 @@ public extension FirebaseAuthHelper {
             print(error?.localizedDescription ?? "err nil")
               guard error == nil else {
                 self.facebook_signOut()
+                self.isLoggingIn = false
                   return
               }
               
