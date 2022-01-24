@@ -84,6 +84,9 @@ public extension FirebaseAuthHelper {
       let user = Auth.auth().currentUser
       
       user?.delete { error in
+        if Auth.auth().currentUser == nil {
+          self.state = .signedOut
+        }
           completion(error)
       }
   }
