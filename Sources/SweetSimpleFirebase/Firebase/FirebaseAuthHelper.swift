@@ -30,6 +30,16 @@ open class FirebaseAuthHelper: ObservableObject {
     }
   }
   
+  public func updateLoginState() {
+    switch Auth.auth().currentUser {
+    case .none:
+      self.setSignInState(.signedOut)
+    case .some(_):
+      self.setSignInState(.signedIn)
+      
+    }
+  }
+  
   public var loginErrorAction: ((_ provider: String) -> ())? = nil
   public var clearUserData: (() -> ())? = nil
   
