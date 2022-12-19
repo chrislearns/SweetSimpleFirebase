@@ -24,6 +24,10 @@ open class FirebaseAuthHelper: ObservableObject {
   @Published public private(set) var signInState: SignInState = .signedOut
   @Published public var isLoggingIn = false
   
+  func setSignInState(_ newState: SignInState) {
+    self.signInState = newState
+  }
+  
   public var loginErrorAction: ((_ provider: String) -> ())? = nil
   public var clearUserData: (() -> ())? = nil
   
