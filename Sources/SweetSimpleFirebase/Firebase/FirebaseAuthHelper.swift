@@ -21,7 +21,7 @@ open class FirebaseAuthHelper: ObservableObject {
     self.clearUserData = clearUserData
     self.loginErrorAction = loginErrorAction
   }
-  @Published public var state: SignInState = .signedOut
+  @Published public private(set) var signInState: SignInState = .signedOut
   @Published public var isLoggingIn = false
   
   public var loginErrorAction: ((_ provider: String) -> ())? = nil
@@ -46,7 +46,7 @@ public extension FirebaseAuthHelper {
           }
           
           
-          self.state = .signedIn
+          self.signInState = .signedIn
           print("logged in as \(authDataResults.user.displayName ?? "(uid):\(authDataResults.user.uid)")")
           
           self.firebaseChangeName("\(firstName) \(lastName)", completion: {user, error in
@@ -64,14 +64,14 @@ public extension FirebaseAuthHelper {
               return
           }
           
-          self.state = .signedIn
+          self.signInState = .signedIn
           completion(authDataResults.user, error)
       }
   }
   func firebaseSignOut(completion: (Error?) -> ()){
       do {
           try Auth.auth().signOut()
-          self.state = .signedOut
+          self.signInState = .signedOut
         self.clearUserData?()
           completion(nil)
       } catch {
@@ -85,7 +85,7 @@ public extension FirebaseAuthHelper {
       
       user?.delete { error in
         if Auth.auth().currentUser == nil {
-          self.state = .signedOut
+          self.signInState = .signedOut
         }
           completion(error)
       }
@@ -119,7 +119,7 @@ public extension FirebaseAuthHelper {
           if let user = authResult?.user {
               
               print(user.displayName as Any)
-              self.state = .signedIn
+              self.signInState = .signedIn
           }
         
         self.setLoggingIn(false)
